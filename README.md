@@ -48,3 +48,38 @@ The `main.tf` file will configure a Kubernetes Deployment which will then be use
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | [revision_history_limit](#input\_bucket\_enable\_mfa\_delete) | The number of history revisions to keep | `number` | `10` | no |
+| [service_account_name] | The name of the Kubernetes ServiceAccount to create for pods | `string` | `lacework-admission-controller` | no |
+| [image_pull_policy] | The pull policy to use when deploying container images. Ex: Always, Never, IfNotPresent | `string` | `Always` | no |
+| [tolerations] | A list of Kubernetes Tolerations to apply to the Deployment definition | `list(map(string))` | `[{ key = "node-role.kubernetes.io/master", effect = "NoSchedule" }]` | no |
+| [namespace] | The Kubernetes namespace in which to deploy the admission controller and (optionally) the proxy scanner | `string` | `lacework` | no |
+| [deploy_combined] | Deploy both the admission controller and proxy scanner together if true. If false, only deploy the admission controller | `bool` | `true` | no |
+| [admission_controller_name] | The name for the Lacework admission controller deployment | `string` | `lacework-admission-controller` | no |
+| [admission_controller_image] | The image to use for deploying the Lacework admission controller | `string` | `lacework/lacework-admission-controller` | no |
+| [admission_controller_image_tag] | The image tag to use for deploying the Lacework admission controller | `string` | `latest` | no |
+| [certs_secret_name] | The name of the K8s secret containing the certificates | `string` | `lacework-admission-certs` | no |
+| [use_self-signed_certs] | Deploy admission controller with self-signed certificates if true. If false, you must define certs in the ca_cert, server_certificate, and server_key variables | `bool` | `true` | no |
+| [enable_debug_logging] | Enable debug logging on the admission controller | `bool` | `true` | no |
+| [tls_port] | Listening port for the admission controller | `number` | `8443` | no |
+| [cert_file_path] | Path for server certificate file in admission controller volume | `string` | `/certs/admission.crt` | no |
+| [cert_key_path] | Path for server key file in admission controller volume | `string` | `/certs/admission.key` | no |
+| [failure_policy] | Webhook falure policy (what response the webhook should take if it fails) Ex: Ignore, Fail | `string` | `Ignore` | no |
+| [webhook_timeout] | Timeout in seconds for admission webhook failure | `number` | `30` | no |
+| [excluded_resources] | The list of resources skip admission review. Ex: ['Pod', 'Deployment', 'ReplicaSet', 'DaemonSet'] | `list(string)` | `[]` | no |
+| [bypass_scope] | The list of namespaces to bypass control of by admission controller. Ex: kube-system,kube-public,lacework,mynamespace | `string` | `kube-system,kube-public,lacework,lacework-dev` | no |
+| [block_exec] | Block command execution (kubectl exec) on pods by admission controller | `bool` | `false` | no |
+| [admission_scanner_timeout] | Default timeout for communication between admission controller and proxy scanner | `number` | `30` | no |
+| [skip_verify] | Skip SSL verification between the webhook and the proxy scanner | `bool` | `true` | no |
+| [default_registry] | Default registry for proxy scanner to use when none is provided in image name | `string` | `index.docker.io` | no |
+| [block_on_error] | Block admission request if proxy scanner returns and error | `bool` | `false` | no |
+| [ca_cert] | Root certificate for TLS authentication with the K8s api server. If use_self_signed_certs is false, this is required. Otherwise a self-signed cert will be created. | `string` | `""` | no |
+| [server_certificate] | Certificate for TLS authentication with the K8s api server. If use_self_signed_certs is false, this is required. Otherwise a self-signed cert will be created. | `string` | `""` | no |
+| [server_key] | Certificate key for TLS authentication with the K8s api server. If use_self_signed_certs is false, this is required. Otherwise a self-signed cert will be created. | `string` | `""` | no |
+| [proxy_scanner_name] | The name for the Lacework proxy scanner deployment | `string` | `lacework-proxy-scanner` | no |
+| [proxy_scanner_image] | The image to use for deploying the Lacework proxy scanner | `string` | `lacework/lacework-proxy-scanner` | no |
+| [proxy_scanner_image_tag] | The image tag to use for deploying the Lacework proxy scanner | `string` | `latest` | no |
+| [proxy_scanner_log_level] | Set the LOG_LEVEL environment variable for proxy scanner. Ex: info, debug | `string` | `info` | no |
+| [proxy_scanner_token] | The token for the Lacework proxy scanner | `string` | | yes |
+| [lacework_account_name] | The name of your Lacework account (for the proxy scanner). | `string` | | yes |
+| [static_cache_location] | Location of the proxy scanner's cache file | `string` | `/opt/lacework/cache` | no |
+| [scan_public_registries] | Set to true if you want to scan images from registries that are publicly accessible | `bool` | `false` | no |
+| [registries] | A list of registries to apply to proxy scanner. See proxy scanner configuration documentation for details | `list(any)` | | yes |
