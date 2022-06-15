@@ -42,3 +42,9 @@ The `main.tf` file will configure a Kubernetes Deployment which will then be use
 | [tls_private_key.admission](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [tls_cert_request.admission](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/cert_request) | resource |
 | [tls_locally_signed_cert.admission](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/locally_signed_cert) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| [revision_history_limit](#input\_bucket\_enable\_mfa\_delete) | The number of history revisions to keep | `number` | `10` | no |
