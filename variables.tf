@@ -165,7 +165,7 @@ variable "server_key" {
 
 variable "skip_cert" {
   type        = bool
-  description = "Skip using certificate communication between admission controller and proxy scanner"
+  description = "Skip encrypted communication between admission controller and proxy scanner using certificate. Default is to skip. If set to false, certificate used will be based on use_self_signed_certs setting."
   default     = true
 }
 

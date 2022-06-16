@@ -1,7 +1,3 @@
-#"ca.crt"        = var.use_self_signed_certs ? tls_self_signed_cert.ca[0].cert_pem : file(var.ca_cert)
-#"admission.key" = var.use_self_signed_certs ? tls_private_key.admission[0].private_key_pem : file(var.server_key)
-#"admission.crt" = var.use_self_signed_certs ? tls_locally_signed_cert.admission[0].cert_pem : file(var.server_certificate)
-
 locals {
   ac_config = {
     "admission.yaml" = yamlencode({
