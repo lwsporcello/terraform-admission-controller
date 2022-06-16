@@ -69,8 +69,11 @@ resource "kubernetes_deployment" "lacework_admission_controller" {
         }
         volume {
           name = "lacework-admission-volume"
-          secret {
-            secret_name = var.admission_controller_name
+          #secret {
+          #  secret_name = var.admission_controller_name
+          #}
+          config_map {
+            name = var.admission_controller_name
           }
         }
       }
@@ -79,6 +82,14 @@ resource "kubernetes_deployment" "lacework_admission_controller" {
 }
 
 resource "kubernetes_secret" "lacework_admission_controller_config" {
+  metadata {
+    name      = var.admission_controller_name
+    namespace = var.namespace
+  }
+  data = local.ac_config
+}
+
+resource "kubernetes_config_map" "lacework_admission_controller_config" {
   metadata {
     name      = var.admission_controller_name
     namespace = var.namespace

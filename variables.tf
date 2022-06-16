@@ -163,6 +163,12 @@ variable "server_key" {
   default     = ""
 }
 
+variable "skip_cert" {
+  type        = bool
+  description = "Skip using certificate communication between admission controller and proxy scanner"
+  default     = true
+}
+
 #proxy scanner parameters
 variable "proxy_scanner_name" {
   type        = string
